@@ -27,5 +27,11 @@ class DirectorService:
             setattr(director_by_id, k, v)
         return self.dao.update(director_by_id)
 
+    def partially_update(self, director_id: int, director_d: Dict[str, Any]):
+        director_by_id: Director = self.dao.get_one(director_id)
+        if "name" in director_d:
+            director_by_id.name = director_d.get("name")
+        return self.dao.update(director_by_id)
+
     def delete(self, did: int) -> None:
         self.dao.delete(did)

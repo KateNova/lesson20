@@ -26,5 +26,11 @@ class GenreService:
             setattr(genre_by_id, k, v)
         return self.dao.update(genre_by_id)
 
+    def partially_update(self, genre_id: int, genre_d: Dict[str, Any]) -> Genre:
+        genre_by_id: Genre = self.dao.get_one(genre_id)
+        if "name" in genre_d:
+            genre_by_id.name = genre_d.get("name")
+        self.dao.update(genre_by_id)
+
     def delete(self, gid: int) -> None:
         self.dao.delete(gid)

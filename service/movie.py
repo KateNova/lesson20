@@ -34,5 +34,23 @@ class MovieService:
             setattr(movie_by_id, k, v)
         return self.dao.update(movie_by_id)
 
+    def partially_update(self, movie_id: int, movie_d: Dict[str, Any]):
+        movie_by_id: Movie = self.dao.get_one(movie_id)
+        if "title" in movie_d:
+            movie_by_id.title = movie_d.get("title")
+        if "description" in movie_d:
+            movie_by_id.description = movie_d.get("description")
+        if "trailer" in movie_d:
+            movie_by_id.trailer = movie_d.get("trailer")
+        if "year" in movie_d:
+            movie_by_id.year = movie_d.get("year")
+        if "rating" in movie_d:
+            movie_by_id.rating = movie_d.get("rating")
+        if "genre_id" in movie_d:
+            movie_by_id.genre_id = movie_d.get("genre_id")
+        if "director_id" in movie_d:
+            movie_by_id.director_id = movie_d.get("director_id")
+        self.dao.update(movie_by_id)
+
     def delete(self, mid: int) -> None:
         self.dao.delete(mid)
